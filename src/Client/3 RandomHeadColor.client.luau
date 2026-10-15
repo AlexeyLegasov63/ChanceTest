@@ -6,12 +6,14 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Chance = require(ReplicatedStorage.Packages.Chance)
 local PlayersUtils = require(ReplicatedStorage.Shared.Utils.PlayersUtils)
 
-PlayersUtils.onLocalCharacter(function(character, characterCleanup)
+PlayersUtils.onLocalCharacter(function(character, cleanup)
 	local head = character:WaitForChild("Head") :: Part
 
-	characterCleanup(Chance.fastHydrate(head, {
+	cleanup(Chance.fastHydrate(head, {
 		BrickColor = Chance.setInterval(function()
 			return BrickColor.random()
-		end, 0.5),
+		end, {
+			interval = 0.5,
+		}),
 	}))
 end)

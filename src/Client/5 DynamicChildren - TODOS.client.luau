@@ -23,6 +23,7 @@ local factory = function(todo: Todo, index: number)
 	element.Name = "Todo" .. index
 	element.Text = todo.text
 	element.TextScaled = true
+	element.TextColor3 = todo.completed and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(255, 0, 0)
 	element.AnchorPoint = Vector2.one / 2
 	element.Size = UDim2.fromScale(0.15, 0.05)
 	element.Position = UDim2.fromScale(1 * math.random(), 1 * math.random())
@@ -30,12 +31,12 @@ local factory = function(todo: Todo, index: number)
 	return element
 end
 
-local scope = Chance.createScope(function(cleanup)
-	Chance.hydrate(cleanup, screenGui, {
+local scope = Chance.createScope(function()
+	Chance.hydrate(screenGui, {
 		Children = Chance.setChildren(todos :: () -> { Todo }, factory),
 	})
 
-	cleanup(screenGui) -- Remove it at the end
+	Chance.cleanup(screenGui) -- Remove it at the end
 end)
 
 for _ = 0, 10 do

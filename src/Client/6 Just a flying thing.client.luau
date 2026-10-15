@@ -5,24 +5,24 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Chance = require(ReplicatedStorage.Packages.Chance)
 
-local destroy = Chance.createScope(function(cleanup)
+local destroy = Chance.createScope(function()
 	local part = Instance.new("Part")
 	part.Anchored = true
 	part.Parent = workspace
 
-	cleanup(Chance.fastHydrate(part, {
+	Chance.cleanup(Chance.fastHydrate(part, {
 		Position = Chance.setRendered(function()
 			return Vector3.new(0, 20 + math.sin(os.clock()) * 5, 0)
 		end),
 	}))
 
-	cleanup(function()
+	Chance.cleanup(function()
 		part:Destroy()
 	end)
 
 	print("Hello world!")
 
-	cleanup(function()
+	Chance.cleanup(function()
 		print("Bye world!")
 	end)
 end)

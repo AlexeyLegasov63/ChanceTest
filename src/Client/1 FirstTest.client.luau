@@ -14,15 +14,17 @@ part.Anchored = true
 part.Size = Vector3.one * 15
 
 local scope = Chance.createScope(function(cleanup)
-	Chance.hydrate(cleanup, part, {
+	Chance.hydrate(part, {
 		Material = Enum.Material.Neon,
 		Color = Chance.setInterval(function()
 			print("Interval test")
 			return BrickColor.random().Color
-		end, 1),
+		end, {
+			interval = 1,
+		}),
 	})
 
-	cleanup(function()
+	Chance.cleanup(function()
 		print("Goodbye, world!")
 	end)
 end)
